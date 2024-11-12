@@ -1,12 +1,11 @@
 import java.util.Arrays;
 
-public class SortingAnalysisAutoria1 {
+public class SortingAnalysis {
 
     public static void main(String[] args) {
         int[] data = {7, 12, 35, 1, 29, 17, 20};
 
-        System.out.println("Vetor inicial: " + Arrays.toString(data));
-
+        System.out.println("Vetor original: " + Arrays.toString(data));
         quickSort(data, 0, data.length - 1);
         
         System.out.println("Vetor ordenado: " + Arrays.toString(data));
@@ -14,26 +13,24 @@ public class SortingAnalysisAutoria1 {
 
     private static void quickSort(int[] array, int low, int high) {
         if (low < high) {
-
-            int pi = partition(array, low, high);
-
-            if (low == 0 && high == array.length - 1) {
-                int menores = pi - low;
-                int maiores = high - pi;
-                System.out.println("Menores: " + menores);
-                System.out.println("Maiores: " + maiores);
-                System.out.println("Posição do pivô: " + pi);
-            }
-
+            int pi = randomizedPartition(array, low, high);
+            System.out.println("Tamanho da partição menores: " + pi);
+            System.out.println("Tamanho da partição maiores: " + (high - pi));
+            System.out.println("Posição do pivô: " + pi);
             quickSort(array, low, pi - 1);
             quickSort(array, pi + 1, high);
         }
     }
 
+    private static int randomizedPartition(int[] array, int low, int high) {
+        int pivotIndex = low + (int)(Math.random() * (high - low + 1));
+        swap(array, pivotIndex, high); 
+        return partition(array, low, high);
+    }
 
     private static int partition(int[] array, int low, int high) {
         int pivot = array[high];
-        int i = (low - 1);
+        int i = (low - 1); 
         for (int j = low; j < high; j++) {
             if (array[j] <= pivot) {
                 i++;
@@ -46,5 +43,12 @@ public class SortingAnalysisAutoria1 {
         array[i + 1] = array[high];
         array[high] = temp;
         return i + 1;
+    }
+
+    private static void swap(int[] array, int i, int j) {
+        if (i == j) return; 
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
     }
 }
