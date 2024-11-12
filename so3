@@ -62,6 +62,8 @@ public class SortingAnalysisAutoria3 {
         }
     }
 
+
+//***************
     private static void insertionSort(int[] array) {
         for (int i = 1; i < array.length; i++) {
             int key = array[i];
@@ -73,6 +75,7 @@ public class SortingAnalysisAutoria3 {
             array[j + 1] = key;
         }
     }
+//***************
 
 
     private static void quickSort(int[] array, int low, int high) {
