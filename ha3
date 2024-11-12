@@ -1,0 +1,99 @@
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+abstract class HashTable {
+    protected List<LinkedList<String>> table;
+    protected int size;
+    protected int collisions;
+
+    public HashTable(int size) {
+        this.size = size;
+        this.collisions = 0;
+        this.table = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            table.add(new LinkedList<>());
+        }
+    }
+
+    protected abstract int hashFunction(String key, int weight);
+
+    public void insert(String key, int weight) {
+        int index = hashFunction(key, weight);
+        LinkedList<String> bucket = table.get(index);
+
+        if (!bucket.isEmpty()) {
+            collisions++;
+        }
+        
+        if (!bucket.contains(key)) {
+            bucket.add(key);
+        }
+    }
+
+    public int getCollisions() {
+        return collisions;
+    }
+
+    public void printDistribution() {
+        for (int i = 0; i < table.size(); i++) {
+            System.out.println("Bucket " + i + ": " + table.get(i).size() + " items");
+        }
+    }
+}
+
+class HashTableFunction1 extends HashTable {
+    public HashTableFunction1(int size) {
+        super(size);
+    }
+
+    @Override
+    protected int hashFunction(String key, int weight) {
+        int hash = weight;
+        for (char c : key.toCharArray()) {
+            hash += c;
+        }
+        return hash % size;
+    }
+}
+
+class HashTableFunction2 extends HashTable {
+    public HashTableFunction2(int size) {
+        super(size);
+    }
+
+    @Override
+    protected int hashFunction(String key, int weight) {
+        int hash = weight;
+        for (char c : key.toCharArray()) {
+            hash += c;
+        }
+        return hash % size;
+    }
+}
+
+public class HashTestAutoria3 {
+    public static void main(String[] args) {
+        int tableSize = 10;
+        int weight = 2;
+
+        HashTable hashTable1 = new HashTableFunction1(tableSize);
+        HashTable hashTable2 = new HashTableFunction2(tableSize);
+
+        String[] values = {"profe", "java", "dev", "marina", "ferias"};
+
+        System.out.println("Inserting into HashTableFunction1:");
+        for (String value : values) {
+            hashTable1.insert(value, weight);
+        }
+        hashTable1.printDistribution();
+        System.out.println("Total Collisions in HashTableFunction1: " + hashTable1.getCollisions());
+
+        System.out.println("\nInserting into HashTableFunction2:");
+        for (String value : values) {
+            hashTable2.insert(value, weight);
+        }
+        hashTable2.printDistribution();
+        System.out.println("Total Collisions in HashTableFunction2: " + hashTable2.getCollisions());
+    }
+}
