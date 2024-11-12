@@ -3,24 +3,19 @@ import java.util.Arrays;
 public class SortingAnalysisAutoria1 {
 
     public static void main(String[] args) {
-        // Vetor estático de inteiros
         int[] data = {7, 12, 35, 1, 29, 17, 20};
 
         System.out.println("Vetor inicial: " + Arrays.toString(data));
 
-        // Quick Sort com impressão dos detalhes da primeira chamada
         quickSort(data, 0, data.length - 1);
         
         System.out.println("Vetor ordenado: " + Arrays.toString(data));
     }
 
-    // Implementação do Quick Sort modificado
     private static void quickSort(int[] array, int low, int high) {
         if (low < high) {
-            // Realiza a partição e obtém o índice do pivô
             int pi = partition(array, low, high);
 
-            // Impressão apenas na primeira chamada
             if (low == 0 && high == array.length - 1) {
                 int menores = pi - low;
                 int maiores = high - pi;
@@ -29,13 +24,11 @@ public class SortingAnalysisAutoria1 {
                 System.out.println("Posição do pivô: " + pi);
             }
 
-            // Chama o quicksort recursivamente nas subpartições
             quickSort(array, low, pi - 1);
             quickSort(array, pi + 1, high);
         }
     }
 
-    // Função de partição
     private static int partition(int[] array, int low, int high) {
         int pivot = array[high];
         int i = (low - 1);
